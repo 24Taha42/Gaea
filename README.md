@@ -1,2 +1,2 @@
 # Gaea
-Gaea Version of PP Game
+This is the first build of the personal project game.
