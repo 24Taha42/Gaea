@@ -1,4 +1,4 @@
-﻿# The script of the game goes in this file.
+# The script of the game goes in this file.
 
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
@@ -7,7 +7,12 @@ define nar = Character("Unknown Caller", color = "#aaaaaa")
 define newsie = Character("Newsperson", color = "#ca5ccd")
 define merchant = Character("Merchant", color = "#ece911")
 define attacker = Character("Attacker", color = "#ff0000")
+define guard = Character("Guard", color = "#ff0000")
 define sailor = Character("Shorter ticketholder", color = "#0000ff")
+define soldier = Character("Soldier", color = "#b34545ff")
+define ju = Character("General Ju", color = "#bb1174")
+define tian = Character("Captain Tian", color = "#bb1174")
+define bataar = Character("General Bataar", color "#208f20")
 image s0p1 = "phonev2.png"
 image blackbg = "#000"
 
@@ -21,15 +26,16 @@ label start:
     scene blackbg
     show s0p1
 
-    "ring ring, ring ring"
+    #"ring ring, ring ring"
     
-    pause 5
-    "Left-click to continue"
+    #pause 5
+    #"Left-click to continue"
 
     menu:
         "Pick up":
             #call s0
-            call s1(True)
+            #call s1(True)
+            call s2(True)
             
         "Don't Pick Up":
             pause 1
@@ -42,6 +48,7 @@ label vars:
     $ year = 1066
     $ xp = 0
     $ hp = 10
+    $ defense = 100
     $ sp = 0
     return
 
@@ -107,6 +114,33 @@ label s1(firsttime):
                 "Talk to the newspaper person":
                     call s1x4(True)
     return
+label s2(firsttime):
+    "It is a cool night, and you are standing on the deck of the boat with beautiful constilations twinkling above your head."
+    guard "Looks like you're about done. I'll be off to bed, then"
+    "As they leave, a star begins to twinkle aggresively. It expands until it's almost the size of the moon"
+    "The light swirls and creates a vortex"
+    "Then, pop, a cellphone falls out"
+    cellphone = False
+    while cellphone == False:
+        "You stretch out your hand to catch it and..."
+            if renpy.random.randint(1,4) != 1:
+                "You catch it"
+                cellphone = True
+            else:
+                "The cellphone crashes smashes into the floor and cracks"
+                "The wind seems to sigh in disappointment"
+                "Then, from the vortex, another cellphone droops"
+    
+    scene blackbg
+    show s0p1
+    "ring ring, ring ring"
+    nar "It seems you know Song Dynasty China pretty well. Let's go over what you learned (or what you could have learned)"
+    nar "1. -oh and you might want to write these down- The Song Dynasty was under attack by the Mongols in the 1200s"
+    nar "2. By 1273, the Northern half of the empire was gone and in 1273 the battle of Xianyang occured"
+    nar "3. The battle of Xianyang was the first recorded use of gunpowder in battle"
+    nar "4. Babarians are humans. The Mongols are humans."
+    return
+                
 
 label s1x1(firsttime):
     merchant "Hello, excuse me for a second- I just have to pack this last thing up"
@@ -164,7 +198,154 @@ label s1x2(firsttime):
     return
 label s1x3(firsttime):
     if firsttime == True:
-        "off to the army you go!"
+        "You walk along a narrow, cobbled street for a few minutes before the grunts of soldiers and whistles of officers become clear."
+        "As you walk, however, you notice more and more people heading in the opposite direction."
+        "There's not much time to think about it, though. The street soon opens up into a large plaza filled with tents and temporary shelters"
+        "A soldier approaches you"
+    soldier "New Recruit, huh?"
+    menu:
+        "Yes":
+            pause 0.0001
+        "No":
+            soldier "Sure"
+    soldier "Go to the yellow tent in the center of camp"
+    menu:
+        "Turn back":
+            call s1(False)
+        "Continue":
+            pause 0.001
+    "As you approach the tent, a teenager comes out proudly donning a military uniform."
+    soldier "You may enter"
+    "The inside of the tent is decorated with portable but still comfortable furniture."
+    "A older man is dressed in gleaming armour, chainmail covering the red tunic he wears beneath"
+    ju "Greetings. You want to join the army, do you?"
+    ju "Well, there's a lot you're going to have to learn. The most important thing to remember is why you are fighting."
+    ju "When you look into the enemies' eyes and realize that they too are just human, remember what they have done to your emperor"
+    ju "Think about the farms they've plundered, the cities they've sacked, the wives and children they have murdered"
+    ju "Remember that they have EARNED every single stab you give them, every arrow that pierces their dispicable flesh"
+    ju "Understand me, kid?"
+    menu:
+        "Say \"Yes SIR!\"":
+            ju "Good"
+        "Nod respectfully":
+            ju "Good"
+        "Back out":
+            ju "Let 'em go. A coward is just another body for the Mongols to step over."
+            call s1(False)
+    ju "Now, on to more practical matters. You can join for free and get no armor, or you can fork over 20 silver pieces and get a helmet"
+    menu:
+        "Give 20 sp for a helmet":
+            $ sp -= 20
+            $ defense -= 20
+        "A helmet's not going to do much anyway":
+            pause 0.001
+        "The less armor, the less to weigh me down":
+            pause 0.001
+    ju "Captain Tian, get this person their equipment and tattoo. They look strong enough for a crossbow, don't you think?"
+    tian "But sir, my platoon already has 60 people"
+    ju "And that will be reflected in your bonus"
+    tian "Yes, SIR!"
+    tian "Come with me private. Let's start the training montage"
+    tian "Excellent training! Our platoon is needed to support a battle 50 miles North. Shall we have a marching montage?"
+    menu:
+        "Yes!":
+            "(Insert Training Montage)"
+        "Neh":
+            pause 0.0001
+    "You arrive at the battle site after a week through the hot summer air"
+    tian "It appears the battle has already begun! Let us join our bretheren in the fight against evil."
+    menu:
+        "Hurrah!":
+            pause 0.001
+        "Hurr... ah?":
+            if renpy.random.randint(1,10) < 4:
+                tian "C'mon, let me hear you one more time"
+                menu:
+                    "Hurrah!":
+                        pause 0.001
+    tian "The battle is going well! Look, they are retreating. Hahaha"
+    "General Tian leads you to the center, which is lagging behind the flanks"
+    tian "You're going face some of the fiercest infantry, but at least it's not the infamous Mongolian Keshigs"
+    attacker "AaaAAaaAH!"
+    menu:
+        "Dodge":
+            if renpy.random.randint(1,10) <= 5:
+                "You successfully avoided the attacker's curved sword, already dripping with blood"
+                "As you do, you notice- with your adrenaline high supervision- an arrow sprout in the back of your attacker"
+                "You look up and see that the keshigs have arrived"
+                "It seems that missing is part of battle"
+            else:                
+                "You yank yourself away from the sword, only to tumble into one of your platoon members."
+                "Unbalanced, they don't move fast enough to block a fatal blow by another of the enemy"
+                "Or wait... the enemy looks so similar to the person they just killed"
+                "They don't look foreign or montstorous, or even particularly mean"
+                "As you begin to truly see them, however, an arrow sprouts in their back"
+                "You look up and see that the keshigs have arrived"
+                "It seems that missing is part of battle"
+        "Block":
+            "You raise up your shield and brace for impact"
+            "Relief washes over you as the attacker's sword cuts a dent in the shield and not your skin"
+            menu:
+                "Make a retaliation attack":
+                    if renpy.random.randint(1,100) <= 5*(100/defense):
+                        "Just before you lower your shield, an arrow thuds in at the very top."
+                        "Your momentum is thrown off, but you still manage to parry another swipe by your attacker"
+                        "It all fades into the background, though, as the sight of the keshigs seems to send a chill through the whole platoon"
+                    else:
+                        "You stab the enemy in their stomach, but just as you do, you hear the unmistakeable whistle of an arrow"
+                        $ hp -= 2
+                        "It pierces you in the side and for a second your vision begins to swim"
+                        "But then the world refocuses and you see what you had already figured- the keshigs have arrived"
+                "Brace for the next blow":
+                    "The attacker's sword is moments away from colliding with your shield when it gets deflected by a fast-moving arrow"
+                    "You look up and see that the keshigs have arrived"
+        "Make a \"tactical retreat\" (Run away)":
+            if renpy.random.randint(1,10) <= 6*(100/defense):
+                "You manage to get to the back of the lines before-"
+                tian "What are you doing private! I thought you were hear to FIGHT!"
+            else:
+                $ hp -= 3
+                "As you try to escape, an arrow pierces your side"
+                "You look up and realize that the keshigs have arrived"
+    tian "Tian's platoon- retreeeeeat!"
+    "You and your platoon put to the test the formation you spent the most time practicing- the orderly retreat"
+    "It's not enough, though."
+    "The left flank, it seems, has already fallen and the Mongols soon encircle you"
+    tian "Private, quick. Let us change clothes"
+    menu:
+        "Yes sir!":
+            tian "Thank you, thank you"
+            tian "Your service will be rewarded"
+        "Excuse me?!":
+            tian "Don't you see- they'll definetely kill me if they know I'm a captian"
+            tian "Think about your country. A captain would be a greater loss than a private"
+            menu: 
+                "Okay":
+                    tian "Thank you, thank you"
+                    tian "Your service will be rewarded"
+                "No way!":
+                    tian "Very well, they captive takers are here already anyway"
+        "What the... no way!"
+            tian "Don't you see- they'll definetely kill me if they know I'm a captian"
+            tian "Think about your country. A captain would be a greater loss than a private" 
+            menu: 
+                "Okay":
+                    tian "Thank you, thank you"
+                    tian "Your service will be rewarded"
+                "No way!":
+                    tian "Very well, they captive takers are here already anyway"
+    bataar "You there, captain. And your assistant; Come with us"
+    bataar "Congratulations, you have been selected to aid us in the seige of Hanoi"
+    "The general moves hurridely along, and his guards prod you along with him"
+    "After many months of hearing the sounds of battle while being held captive by the army, you finally recognize a familiar place:"
+    "The place where you were first recruited"
+    "The general comes and talks to you"
+    bataar "Recognize this place. You are from Shanghai, no?"
+    tian "Yes :("
+    bataar "Well, you won't be here very long. You are to join some of your fellow inferiors on a ship"
+    bataar "When you get where you get, do what you are told"
+    "You and many others board a sad boat with many sad people and a few angry guards"
+
     return
 label s1x4(firsttime):
     newsie "Hello, what would you like to hear about?"
