@@ -178,6 +178,33 @@ label s2(firsttime):
     nar "But there's no way a medieval Chinese vessel could have made it there in the 1500s"
     nar "Eh, I'm sure some historian will make up a story based on flimsy evidence down the line"
     $ year = 1520
+    scene blackbg
+    show tian
+    "You wake up in a thick morning fog, with just the company of Captian Tian in a small lifeboat."
+    tian "Ah, yes, you're awake."
+    menu:
+        "What happened?!":
+            pause 0.0001
+        "What the %&$@ happened?!":
+            pause 0.0001
+        "Not you again...":
+            tian "Well, thank you very much."
+            tian "I don't really want to be here either, if that makes you feel any better."
+            tian "But, well..."
+    "He points behind you."
+    scene blackbg
+    show s2p1
+    "You see your ship, the mighty Green Opal, sinking into the sea."
+    "As you look past Tian, though, you see land and a hint of civilization in the background."
+    "You pull up to the small, newly built port after a hard 20 minutes of rowing"
+    "As you get out of your boat, you realize that you are standing in the town square, along with a handful of other people and llamas."
+    tian "I'm going to see if I can talk to the captain of that boat over there."
+    tian "I don't think we'll have much luck in this tiny town."
+    menu:
+        "Deal with the merchant":
+        "Attempt a trivia test to turn your fortunes around.":
+        "Go with Captain Tian":
+        "Talk to the person waving a \"looking to hire\" sign":
     return     
 
 label s1x1(firsttime):
@@ -287,10 +314,11 @@ label s1x3(firsttime):
     ju "And that will be reflected in your bonus"
     tian "Yes, SIR!"
     tian "Come with me private. Let's start the training montage"
+    "(Insert Training Montage)"
     tian "Excellent training! Our platoon is needed to support a battle 50 miles North. Shall we have a marching montage?"
     menu:
         "Yes!":
-            "(Insert Training Montage)"
+            "(Insert Marching Montage)"
         "Neh":
             pause 0.0001
     "You arrive at the battle site after a week through the hot summer air"
@@ -407,3 +435,8 @@ label s1x4(firsttime):
             newsie "But one of my cousins was in the army and he said they were just human. So how bad could they be right?"
             pause 3
             newsie "... right?"
+
+label s2x1(firsttime):
+label s2x2(firsttime):
+label s2x3(firsttime):
+label s2x4(firsttime):
