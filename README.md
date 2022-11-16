@@ -5,4 +5,4 @@ Scene:
   The only thing I have modified in the scene.rpy was adding a bar to the top of the screen using frame at around line 100.
   
 Script:
-  The script is so far only for scene 1 of the project, taking learners to the last holdouts of the Southern Song Dynasty
+  The script is goes up to scene 1 and 2 as well as part of 3. 
