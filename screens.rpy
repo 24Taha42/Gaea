@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 ## Initialization
 ################################################################################
 
@@ -95,9 +95,11 @@ style frame:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#say
 
+
+
 screen say(who, what):
     style_prefix "say"
-
+    
     frame:
         xpos 0 ypos 0
         xminimum 1920
@@ -105,13 +107,11 @@ screen say(who, what):
         yminimum 0
         ymaximum 75
 
-        text "Experience Points: [xp]       Health: [hp]/10           Silver: [sp] g        Year: [year]" xalign 0.5
+        text "Experience Points: [xp]       Health: [hp]/10           Money: [sp] p        Year: [year]" xalign 0.5
 
     window:
         id "window"
-
         if who is not None:
-
             window:
                 id "namebox"
                 style "namebox"
@@ -129,6 +129,8 @@ screen say(who, what):
 ## Make the namebox available for styling through the Character object.
 init python:
     config.character_id_prefixes.append('namebox')
+    
+    
 
 style window is default
 style say_label is default
@@ -137,7 +139,6 @@ style say_thought is say_dialogue
 
 style namebox is default
 style namebox_label is say_label
-
 
 style window:
     xalign 0.5
@@ -227,8 +228,8 @@ style choice_button is button
 style choice_button_text is button_text
 
 style choice_vbox:
-    xalign 0.5
-    ypos 405
+    xalign 0
+    ypos 300
     yanchor 0.5
 
     spacing gui.choice_spacing
