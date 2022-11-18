@@ -25,6 +25,7 @@ define rando2 = Character("Other Random Person", color = "#0c4fda")
 define abd = Character("Abdullah", color = "#ad4592")
 define brb = Character("Corsair", color = "#cccccc")
 define aminah = Character("Amina", color = "#f36a7f")
+define watch = Character("Watchperson", color = "#E53935")
 image s0p1 = "phonev2.png"
 image s1x2 = im.Scale("boats.png", 1000, 1000)
 image s2y1 = "noyellow.png"
@@ -41,7 +42,8 @@ image blackbg = "#000"
 # The game starts here.
 
 label start:
-    call vars
+    call vars from _call_vars
+    call s3x2(True) from _call_s3x2
 
     scene blackbg
     show s0p1
@@ -54,17 +56,23 @@ label start:
 
     menu:
         "Pick up":
-            #call s0
-            #call s1(True)
-            #call s2(True)
-            $ sp = 10
-            call s3x1(True)
+            call s0 from _call_s0
+            call s1(True) from _call_s1
+            call s2(True) from _call_s2
+            call s3(True) from _call_s3
             scene blackbg
             show s0p1
-            nar "Congratulations! You have finished the game with [xp] expierence points."
-            nar "Submit feedback at tinyurl.com/whagfeedback"
         "Don't Pick Up":
-            pause 1
+            pause 0.5
+
+    call end(endingnum) from _call_end
+    return
+label end(endingnum):
+    if endingnum == 0:
+        pause 0.001
+
+    nar "Congratulations! You have finished the game with [xp] expierence points."
+    nar "Submit feedback at tinyurl.com/whagfeedback"
     return
 
 label vars:
@@ -124,7 +132,7 @@ label s1(firsttime):
 
     menu:
         "Join the crowd":
-            call s1x2(True)
+            call s1x2(True) from _call_s1x2
         "Listen for more information":
             $ xp += 1
             newsie "XIANGYANG HAS FALLEN TO THE BARBARIANS!"
@@ -133,13 +141,13 @@ label s1(firsttime):
             newsie "This announcement was sponsored by Raid: Shodown Legend"
             menu:
                 "Visit a merchant stall":
-                    call s1x1(True)
+                    call s1x1(True) from _call_s1x1
                 "Enter the stream of people":
-                    call s1x2(True)
+                    call s1x2(True) from _call_s1x2_1
                 "Go to the army camp":
-                    call s1x3(True)
+                    call s1x3(True) from _call_s1x3
                 "Talk to the newspaper person":
-                    call s1x4(True)
+                    call s1x4(True) from _call_s1x4
     return
 label s2(firsttime):
     if firsttime == True:
@@ -232,13 +240,13 @@ label s2(firsttime):
         tian "I don't think we'll have much luck in this tiny town."
     menu:
         "Deal with the merchant":
-            call s2x1(True, False)
+            call s2x1(True, False) from _call_s2x1
         "Attempt a trivia test to turn your fortunes around":
-            call s2x2(True, False)
+            call s2x2(True, False) from _call_s2x2
         "Go with Captain Tian":
-            call s2x3(True)
+            call s2x3(True) from _call_s2x3
         "Talk to the person waving a \"looking to hire\" sign":
-            call s2x4(True)
+            call s2x4(True) from _call_s2x4
     return     
 label s3(firsttime):
     trivier "This ship will take you to Valencia in the mother country!"
@@ -316,7 +324,7 @@ label s3(firsttime):
             abd "Very good?"
             abd "Who else?"
             "Several people volunteer and the pirates are satisfied."
-            call s3x4(True)
+            call s3x4(True) from _call_s3x4
         "Don't volunteer":
             abd "Guess we'll decide."
             "A pirate comes up to you and sizes you up."
@@ -331,14 +339,14 @@ label s3(firsttime):
                     "Go along with it":
                         pause 0.001
                 "Through a mix of volunteering and force, Abdullah gets his required number of recruits."
-                call s3x4(True)
+                call s3x4(True) from _call_s3x4_1
             else:
                 brb "Too weak"
                 menu:
                     "Dispute the insult":
                         brb "Okay, so you're cool with coming, then."
                         abd "Great!"
-                        call s3x4(True)
+                        call s3x4(True) from _call_s3x4_2
                     "Accept the insult":
                         "Through a mix of volunteering and force, Abdullah gets his required number of recruits."
     "Now manned by the corsairs, your ship is taken East for a couple of weeks."
@@ -390,9 +398,18 @@ label s3(firsttime):
     "Which direction do you go?"
     menu:
         "Southwest, to the Grand Bazaar":
-            call s1x1(True, False)
+            call s3x1(True, False) from _call_s3x1
         "Southeast, to the biggest mosques":
-            call s3x3(True, False)
+            call s3x3(True, False) from _call_s3x3
+    return
+label s4(firsttime):
+    scene blackbg
+    show s0p1
+    nar "Hello!"
+    nar "I figured that was a little too intense."
+    nar "For the last time."
+    nar "You have learned a lot over these last few adventures."
+    call end(0) from _call_end_1
     return
 
 label s1x1(firsttime):
@@ -430,7 +447,7 @@ label s1x1(firsttime):
             merchant "Thank you for visiting!"
         "Nothing, thank you":
             pause 0.00001
-    call s1(False)
+    call s1(False) from _call_s1_1
     return
 label s1x2(firsttime):    
     "You enter into the flowing mass of people, whose collective body heat soaks into your skin"
@@ -438,14 +455,15 @@ label s1x2(firsttime):
     "After some time, you finally emerge onto a harbor packed with people of all ages"
     scene blackbg
     show s1x2
-    "In front of you, there are two people waving one ticket each."
-    "The taller one stands in front of a mighty vessel that gleams in the sun..."
+    "Standing on the docks, there are two people waving one ticket each."
+    "The taller one stands before a mighty vessel that gleams in the sun..."
     "the shorter in front of something that seems barely to be floating"
     "A twenty-something year-old pushes forward to the better looking ship"
     menu:
         "Race the twenty-something year-old to the good boat":
             "Just as the ticketholder is giving you your ticket, the person you were racing pulls your arm back."
-            attacker "Please let me have this"
+            attacker "Please" 
+            attacker "let me have this"
             menu:
                 "Let them take the ticket":
                     "You watch as they take the prize"
@@ -480,7 +498,7 @@ label s1x3(firsttime):
     soldier "Go to the yellow tent in the center of camp"
     menu:
         "Turn back":
-            call s1(False)
+            call s1(False) from _call_s1_2
         "Continue":
             pause 0.001
     "As you approach the tent, a teenager comes out proudly donning a military uniform."
@@ -500,7 +518,7 @@ label s1x3(firsttime):
             ju "Good"
         "Back out":
             ju "Let 'em go. A coward is just another body for the Mongols to step over."
-            call s1(False)
+            call s1(False) from _call_s1_3
     $ xp += 1
     ju "Now, on to more practical matters. You can join for free and get no armor, or you can fork over 20 paper monies and get a helmet"
     menu:
@@ -643,7 +661,7 @@ label s1x4(firsttime):
             newsie "But one of my cousins was in the army and she said they were just human. So how bad could they be right?"
             newsie "..."
             newsie "right?"
-    call s1(False)
+    call s1(False) from _call_s1_4
     return
 
 label s2x1(firsttime, lasttime):
@@ -673,11 +691,11 @@ label s2x1(firsttime, lasttime):
     if lasttime == True:
         menu:
             "Deal with the merchant":
-                call s2x1(False, True)
+                call s2x1(False, True) from _call_s2x1_1
             "Take a trivia test to get an all-expense paid vacation":
-                call s2x2(False, True)
+                call s2x2(False, True) from _call_s2x2_1
     elif lasttime == False:
-        call s2(False)
+        call s2(False) from _call_s2_1
     return
 label s2x2(firsttime, lasttime):
     scene blackbg
@@ -703,11 +721,11 @@ label s2x2(firsttime, lasttime):
                 if lasttime == True:
                     menu:
                         "Deal with the merchant":
-                            call s2x1(False, True)
+                            call s2x1(False, True) from _call_s2x1_2
                         "Take a trivia test to get an all-expense paid vacation":
-                            call s2x2(True)
+                            call s2x2(True) from _call_s2x2_2
                 elif lasttime == False:
-                    call s2(False)
+                    call s2(False) from _call_s2_2
                 elif lasttime == 3:
                     trivier "I'll wait"
                     menu:
@@ -837,13 +855,13 @@ label s2x2(firsttime, lasttime):
     
 
     if lasttime == 3:
-        call s2x4(False)
+        call s2x4(False) from _call_s2x4_1
         trivier "Oh look!"
         trivier "What a coincidence."
         trivier "The ship to take you to Seville has arrived!"
         "Behind you, gliding over the waves, is a magnificent ship flying the family colors of the Hapsburgs"
     else:
-        call s3(True)
+        call s3(True) from _call_s3_1
 
     return
 label s2x3(firsttime):
@@ -860,7 +878,7 @@ label s2x3(firsttime):
                 "Nah":
                     ach "Okay, then"
                     ach "Bye!"
-                    call s2(False)
+                    call s2(False) from _call_s2_3
     ach "Well, we have the perfect job for you!"
     ach "My partner and I recently lost our assistant to smallpox"
     ach "Will you help us take these tools to Huanaco and bring back some silver?"
@@ -869,7 +887,7 @@ label s2x3(firsttime):
         "Yes":
             pause 0.001
         "No":
-            call s2(False)
+            call s2(False) from _call_s2_4
     ach "Okie dokie, let's go then." 
     ach "You pull the cart with the pickaxes"
     "For many days, you walk through ancient river beds and along fast-flowing streams."
@@ -922,7 +940,7 @@ label s2x3(firsttime):
     attacker "Sure."
     attacker "What'cha got under that blanket of yours?"
     "Achiyaku pulls out 5 silver bars, only about 1/2 pound."
-    ach "4 pounds of silver and a bunch of potatoes"
+    ach "5 pounds of silver and a bunch of potatoes"
     attacker "Likely story."
     "The speaker makes a small movement and one of the attackers stabs at your leg..."
     if renpy.random.randint(1,10) <= 6*(defense/100):
@@ -953,9 +971,9 @@ label s2x3(firsttime):
     ach "Here's your money."
     menu:
         "Deal with the merchant":
-            call s2x1(True, True)
+            call s2x1(True, True) from _call_s2x1_3
         "Attempt a trivia test to get an all-expense paid vacation":
-            call s2x2(True, True)
+            call s2x2(True, True) from _call_s2x2_3
     return
 label s2x4(firsttime):
     if firsttime == False:
@@ -1020,7 +1038,7 @@ label s2x4(firsttime):
     trivier "I don't believe we've met."
     isabella "He's offering the {b}experience{/b} of a lifetime"
     trivier "Yes I am!"
-    call s2x2(True, 3)
+    call s2x2(True, 3) from _call_s2x2_4
 
     return
 
@@ -1041,27 +1059,27 @@ label s3x1(firsttime, lasttime):
         merch4 "At my stall, you can get 15 ounces of olive oil for just 2 silver monies."
     $ continuer = True
     # This interaction doesn't add much depth/ gets boring fast, but was challenging to code
-    if sp > 0 and continuer == True:
+    if sp > 1 and continuer == True:
         menu:
-            "Bargain for the furs":
+            "Bargain for the furs (starting at 5 monies)":
                 merchant "Thank you choosing my stall!"
-                call s3x1y1(5,2)
-            "Bargain for the spices":
-                merch2 "Thanks for choosing my stall!"
-                call s3x1y1(9,3)
-            "Bargain for the fez":
+                call s3x1y1(5,2, lasttime) from _call_s3x1y1
+            "Bargain for the spices (starting at 9 monies)":
+                merch2 "Thanks for choosing the most elaborate stall!"
+                call s3x1y1(9,3, lasttime) from _call_s3x1y1_1
+            "Bargain for the fez (starting at 4 monies)":
                 merch3 "Congratulations on choosing the best stall!"
-                call s3x1y1(4,1)
-            "Bargain for the olive oil":
+                call s3x1y1(4,1, lasttime) from _call_s3x1y1_2
+            "Bargain for the olive oil (starting at 2 monies)":
                 merch4 "I'm glad you chose my stall!"
-                call s3x1y1(2,1)
+                call s3x1y1(2,1, lasttime) from _call_s3x1y1_3
             "Don't buy anything":
                 $ continuer = False
     if lasttime:
         "Over the aromas of cooking kebabs and dried fruits, a strong burning smell fills your nose"
         "The chatter of the market turns to screams"
         rando "FIIIIRE!"
-        call s3x2(True)
+        call s3x2(True) from _call_s3x2_1
     else:
         "As you continue through the bazaar, you here more and more people talking about the military celebration"
         rando "I heard they're going to use the newest cannons from the Transylvanian frontline!"
@@ -1069,9 +1087,9 @@ label s3x1(firsttime, lasttime):
         rando2 "I'm so glad we're living under Mehmed IV."
         menu:
             "Go to the military celebration":
-                call s3x3(True, True)
+                call s3x3(True, True) from _call_s3x3_1
             "Head to the tall mosques":
-                call s3x3(True, True)
+                call s3x3(True, True) from _call_s3x3_2
     return
 label s3x2(firsttime):
     "The whole scene descends into chaos worse than middle schoolers when the lunch bell rings."
@@ -1097,23 +1115,28 @@ label s3x2(firsttime):
     "All fearing the same all-consuming invention of humanity."
     menu:
         "Take a moment to be humbled":
+            scene blackbg
+            show s0p1
             "A phone appears in your hand and you are taken away from the grip of death once again."
         "Board the closest ship":
             "You race your way to a large cargo ship bearing the British flag."
             "Nobody is there to check your passanger status, so you make it on smoothly."
             "But as you look back, you notice that if you tried just a few moments later you would have fallen into the sea."
-            guard "Are you headed to Egypt?"
+            guard "Good evening."
+            guard "Unfortunetely, the harbor on the Asian side of Constantinople is clogged right now."
+            guard "We're anchoring in the sea for the night, but tomorrow we'll take you to the other side of the strait."
             menu:
-                "Yes, exactly":
-                    guard "Good."
-                "I wasn't planning on it":
-                    guard "Well that's where you're going."
+                "Thank you so much":
+                    guard "You're very much welcome."
+                "Only one night?":
+                    guard "Sorry, we don't really have the supplies to do anything else."
             guard "You can sleep on the floor, if you can find space."
             "You do find space."
             "As you lay down your head after another long day, something hard and cool appears beneath."
+            scene blackbg
+            show s0p1
             "It's a phone."
-    nar "Hello!"
-
+    call s4(True) from _call_s4
     return
 label s3x3(firsttime, lasttime):
     "You go with the flow of the crowd through the winding streets of the city, keeping the minarets ahead of you."
@@ -1129,6 +1152,7 @@ label s3x3(firsttime, lasttime):
     "Standing across from the Hagia Sophia, the Blue Mosque rises dome stacked above dome reaching toward the rising moon."
     "Each of the dome and minaret has a perfect symmetry and pierces elegantly into the sky just a few shades lighter than the domes"
     "And closer to eye level, arches adorn every entrance and balcony on the ginormous structure"
+    $ xp += 1
     aminah "What do ya think about this one?"
     menu:
         "It's amazing":
@@ -1158,6 +1182,7 @@ label s3x3(firsttime, lasttime):
         "Just as the military people begin to march, you notice a large glowing in the distance."
         "At first, it seems ignorable- perhaps just a large party at the bazaar."
         "Soon, however, the glowing climbs to the rooftops and you begin to make out it's source."
+        $ xp += 1
         "It is an enormous fire, crawling through the heart of the Capital."
         rando "Do you hear that?"
         "In between the drumming and singing in front of you, distant and desperate screams stab through your heart."
@@ -1171,7 +1196,9 @@ label s3x3(firsttime, lasttime):
             "Watch & Wait":
                 "And then the spark is lit."
                 rando "RUUUUUUN!"
+        call s3x2(True) from _call_s3x2_2
     else:
+        $ xp += 1
         "Marching ensues for half an hour, with epic displays of artillery and discipline as the sun falls to the horizon."
         "Just as the last beat of the last song echoed through the crowd, the minarets began to yell."
         "From high up, a dozen of men begin azaan, the call to prayer."
@@ -1190,31 +1217,151 @@ label s3x3(firsttime, lasttime):
                         pause 0.001
                     "Ohhh kay":
                         pause 0.001
-                call s3x1(True, True)
+                call s3x1(True, True) from _call_s3x1_1
             "Go to the grand bazaar":
-                call s3x1(True, True)
+                call s3x1(True, True) from _call_s3x1_2
     return
 label s3x4(firsttime):
+    abd "New Recruits!"
+    abd "You will be split up into ten groups."
+    "A corsair comes around and marks you as part of group six."
+    abd "Group six will be going aboard the {i}Murad IV{/i}"
+    abd "..."
+    abd "With me."
+    "Abdullah leads to a majestic  ship, that looks to be able to cut across the waves like a shark"
+    abd "You see those oars on the sides of the boat?"
+    menu:
+        "No, there's not visuals in this game.":
+            "Woooooow"
+            "That's low"
+        "Yes, sir!":
+            pause 0.001
+    abd "Well, that's where you'll be rowing."
+    abd "We are going to escort your caravel to Constantinople."
+    abd "If you row fast enough, there's a chance you'll be able to join me in the military parade."
+    abd "If you don't"
+    abd "..."
+    abd "Well, you'll row."
+    "Your fellow captors choose an oar and sit on the benches next to them."
+    "A few try to move their oars, but struggle and fall."
+    menu:
+        "Show them how it's done":
+            if renpy.random.randint(1,10) <= 5:
+                $ hp -= 1
+                "You pull your arm muscles"
+            else:
+                $ sp += 1
+                abd "That's very good."
+                abd "Here, have a bonus."
+        "Watch and learn":
+            pause 0.001
+    "Some of the corsairs come around and show everybody how to row."
+    "After a couple days, you and your fellow captives become used to the schedule of rowing, eating, sleeping, pooping, and peeing all on your tiny rowing bench."
+    abd "Now that you have mastered the basics- at least for the most part-" 
+    abd "It's time I teach you what it means to be a Barbary Corsair."
+    abd "Despite what it may look like, it's not all thieving, raping, plundering, and fighting."
+    abd "Although there is plently of that too."
+    abd "It also involves diplomacy, shipmanship, calculations, and cunning."
+    abd "Additionally, it involves living a comfortable life and getting what you deserve."
+    abd "Who's up for it?"
+    menu:
+        "Me!":
+            abd "Thats the spirit!"
+            abd "Just convert to Islam and work diligently and you may even rise to my rank."
+        "Say nothing":
+            "A few people look around and nod toward each other, signing up."
+    "Over the next few days, Abdullah gives lectures about the art of keeping your allies happy, keeping ship upright, and some basic maneuvers."
+    menu:
+        "Work diligently":
+            $ diligence = True
+        "Do what it takes to not be yelled at":
+            $ diligence = False
+        "Don't try":
+            $ diligence = False
+            $ hp -= 1
+            abd "Hopefully a day without food will teach you something about paying attention to me."
+    "At last, on a clear afternoon, a watchperson in the crow's nest calls out"
+    watch "We have almost arrived!"
+    "You look out and see the coastline of Asia to your right and Europe to your East"
+    "They curve tword each other ahead of you, each terminating at a peninsula just coming into view."
+    "The peninsulas form the entrance of a straight that stretches into the distance."
+    "Perched atop the land are hundreds of buildings with roofs of all colors."
+    "Sticking out from the urban sprawl are dozens of mosques and cathedrals of all different colors."
+    "Abdullah comes out from the captain's quarters."
+    abd "I have decided that even if all of you aren't up to standard, you are better than any of the other crews."
+    abd "You will all be joining me for the military parade this evening."
+    abd "Wear these uniforms."
+    abd "I can't have you looking like slaves."
+    abd "Even though you are."
+    if diligence:
+        abd "I appreciate a hard worker."
+        $ sp += 1
+        abd "Have this money."
+        abd "Maybe one day you'll be able to buy your way out of rowing."
+    "You pull in to a dockyard and Abdullah leads you through the city."
+    abd "To your left is the Topkapi Palace, for our Sultan Mehmed IV"
+    abd "Ahead of you, where we are headed, are the Hagia Sophia and the Blue Mosque."
+    abd "We'll be performing in the plaza between them."
+    "He takes you to a park where you wait in the hot evening sun for a couple of hours before the sound of drums break the monotony."
+    abd "We are up third!"
+    abd "Follow my queues."
+    abd "It's just like a taught you."
+    "Abdullah marches up to a cleared out space to the right of the Janissaries, clearly the cream of the crop."
+    abd "We are the corsairs!"
+    "He motions for you to march"
+    menu:
+        "March":
+            "You feel at one with the rest of the corsairs."
+            "Each step you take is matched by those of a hundred others."
+        "Stay still":
+            "Despite your stuborness, the recruits next to you push you along."
+            rando "What do you think you're doing?"
+            rando "You're going to get us all beaten!"
+    abd "We defend our nation by taking what should be ours from those who think otherwise!"
+    "Cheering ensues"
+    "And then, deep in the city, you notice something glowing."
+    "At first, it seems ignorable-" 
+    "perhaps just a large party at the bazaar."
+    "Soon, however, the glowing climbs to the rooftops and you begin to make out it's source."
+    $ xp += 1
+    "It is an enormous fire, crawling through the heart of the Capital."
+    rando "Do you hear that?"
+    "In between the drumming and singing around you, distant and desperate screams stab through your heart."
+    "Slowly, the realization of the fire spreads through the crowd."
+    "Confusion turns to fear and the crowd seems to freeze."
+    "Now, even the drummers have stopped their beating."
+    "It seems that the the whole audience is now made of gunpowder, ready to ignite at the slightest of sparks."
+    menu:
+        "Scream \"FIIIIRE\"":
+            pause 0.001
+        "Watch & Wait":
+            "And then the spark is lit."
+            rando "RUUUUUUN!"
+    call s3x2(True) from _call_s3x2_3
 
     return
 
-label s3x1y1(fincost, valu):
-    $ continuer2 = True
-    while continuer2 == True:
-        merchant "That'll be [fincost] silver monies"
-        menu:
-            "Go lower":
-                if renpy.random.randint(1,10) <= 4:
-                    "Very well"
-                else:
-                    "Fine, but this is as low as I'll go."
+label s3x1y1(fincost, valu, lsttm):
+    if sp >= fincost:
+        $ continuer2 = True
+        while continuer2 == True:
+            merchant "That'll be [fincost] silver monies"
+            menu:
+                "Go lower":
+                    if renpy.random.randint(1,10) <= 4:
+                        "Very well"
+                    else:
+                        "Fine, but this is as low as I'll go."
+                        $ continuer2 = False
+                "Buy":
+                    $ fincost += 1
                     $ continuer2 = False
-            "Buy":
-                $ fincost += 1
-                $ continuer2 = False
-        $ fincost -= 1
-    $ sp -= fincost
-    $ xp += valu
-    $ itemsval += valu
-    call s3x1(False)
+            $ fincost -= 1
+        $ sp -= fincost
+        $ xp += valu
+        $ itemsval += valu
+    else:
+        merchant "Sorry, I don't sell anything cheap enough for you."
+        merchant "Even at bargain price."
+    call s3x1(False, lsttm) from _call_s3x1_3
     return
