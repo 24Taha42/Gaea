@@ -1,7 +1,8 @@
-# The script of the game goes in this file.
-
-# Declare characters used by this game. The color argument colorizes the
-# name of the character.
+# Welcome to the script!
+# First I define the characters, images, and variables, then call the start label
+# There are then 4 primary blocks: s1-4, s1x1-4, s2x1-4, and s3x1-4.
+# The first block contains the code for the transition before the given scene number
+# The next three blocks contain the code for the 4 main branches of the scene number
 
 define nar = Character("Unknown Caller", color = "#aaaaaa")
 define newsie = Character("Newsperson", color = "#ca5ccd")
