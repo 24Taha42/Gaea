@@ -37,14 +37,16 @@ image s2y6 = "phoneyellow.png"
 image s2p1 = im.Scale("shipwrecked.png", 960, 960)
 image s2p2 = im.Scale("landho.png", 768, 960)
 image blackbg = "#000"
-
+default hp = 10
+default year = 1066
+default xp = 0
+default defense = 100
+default sp = 0
+default itemsval = 0
 
 # The game starts here.
 
 label start:
-    call vars from _call_vars
-    call s3x2(True) from _call_s3x2
-
     scene blackbg
     show s0p1
     with fade
@@ -58,30 +60,19 @@ label start:
         "Pick up":
             call s0 from _call_s0
             call s1(True) from _call_s1
-            call s2(True) from _call_s2
-            call s3(True) from _call_s3
             scene blackbg
             show s0p1
         "Don't Pick Up":
             pause 0.5
 
-    call end(endingnum) from _call_end
+    call end(0) from _call_end
     return
 label end(endingnum):
     if endingnum == 0:
         pause 0.001
 
     nar "Congratulations! You have finished the game with [xp] expierence points."
-    nar "Submit feedback at tinyurl.com/whagfeedback"
-    return
-
-label vars:
-    $ year = 1066
-    $ xp = 0
-    $ hp = 10
-    $ defense = 100
-    $ sp = 0
-    $ itemsval = 0
+    nar "Make sure to give the creator feedback!"
     return
 
 label s0:
@@ -115,6 +106,7 @@ label s0:
             nar "Yes, good job. I see you checked the top right part of your screen"
     nar "The place is"
     nar "Hang on, I'm getting a phone call; got to go. Guess you'll just have to apply your historical knowledge!"
+    call s1(True) from _call_s1_5
     return
 
 label s1(firsttime):
@@ -129,25 +121,20 @@ label s1(firsttime):
         "Everyone around you wears silk that shines in the warm afternoon sun"
         "As you come into focus, though, you notice that the people aren't behaving normally"
         "Those who are not trampling over each other to go into an alleyway to the East are hurridely trying to sell their wares"
-
-    menu:
-        "Join the crowd":
-            call s1x2(True) from _call_s1x2
-        "Listen for more information":
-            $ xp += 1
-            newsie "XIANGYANG HAS FALLEN TO THE BARBARIANS!"
-            newsie "They have come to steal our large population and sophisticated metalworking!"
-            newsie "Your emperor is asking all men between the ages of 20 & 40 to join the army and defend your homes"
-            newsie "This announcement was sponsored by Raid: Shodown Legend"
-            menu:
-                "Visit a merchant stall":
-                    call s1x1(True) from _call_s1x1
-                "Enter the stream of people":
-                    call s1x2(True) from _call_s1x2_1
-                "Go to the army camp":
-                    call s1x3(True) from _call_s1x3
-                "Talk to the newspaper person":
-                    call s1x4(True) from _call_s1x4
+        "Somebody standing on a wooden crate begins to yell"
+        newsie "XIANGYANG HAS FALLEN TO THE BARBARIANS!"
+        newsie "They have come to steal our large population and sophisticated metalworking!"
+        newsie "Your emperor is asking all men between the ages of 20 & 40 to join the army and defend your homes"
+        newsie "This announcement was sponsored by Raid: Shodown Legend"
+        menu:
+            "Visit a merchant stall":
+                call s1x1(True) from _call_s1x1
+            "Enter the stream of people":
+                call s1x2(True) from _call_s1x2_1
+            "Go to the army camp":
+                call s1x3(True) from _call_s1x3
+            "Talk to the newspaper person":
+                call s1x4(True) from _call_s1x4
     return
 label s2(firsttime):
     if firsttime == True:
@@ -407,8 +394,9 @@ label s4(firsttime):
     show s0p1
     nar "Hello!"
     nar "I figured that was a little too intense."
-    nar "For the last time."
     nar "You have learned a lot over these last few adventures."
+    nar "..."
+    nar "It's time I say goodbye."
     call end(0) from _call_end_1
     return
 
@@ -482,6 +470,7 @@ label s1x2(firsttime):
     $ xp += 1
     sailor "We have a compass {i}and{/i} a star chart."
     sailor "You'll be safe with us"
+    call s2(True) from _call_s2
     return
 label s1x3(firsttime):
     if firsttime == True:
@@ -564,7 +553,7 @@ label s1x3(firsttime):
                 "You successfully avoided the attacker's curved sword, already dripping with blood"
                 "As you do, you notice- with your adrenaline high supervision- an arrow sprout in the back of your attacker"
                 "You look up and see that the keshigs have arrived"
-                "It seems that missing is part of battle"
+                "It seems that hitting allies is part of battle"
             else:                
                 "You yank yourself away from the sword, only to tumble into one of your platoon members."
                 "Unbalanced, they don't move fast enough to block a fatal blow by another of the enemy"
@@ -572,7 +561,7 @@ label s1x3(firsttime):
                 "They don't look foreign or montstorous, or even particularly mean"
                 "As you begin to truly see them, however, an arrow sprouts in their back"
                 "You look up and see that the keshigs have arrived"
-                "It seems that missing is part of battle"
+                "It seems that hitting allies is part of battle"
         "Block":
             "You raise up your shield and brace for impact"
             "Relief washes over you as the attacker's sword cuts a dent in the shield and not your skin"
@@ -627,7 +616,7 @@ label s1x3(firsttime):
                 "No way!":
                     tian "Very well, they captive takers are here already anyway"
     bataar "You there, captain. And your assistant; Come with us"
-    bataar "Congratulations, you have been selected to aid us in the seige of Hanoi"
+    bataar "You have been selected to aid us in the seige of Hanoi"
     "The general moves hurridely along, and his guards prod you along with him"
     $ xp += 1
     "After many months of hearing the sounds of battle while being held captive by the army, you finally recognize a familiar place:"
@@ -638,7 +627,7 @@ label s1x3(firsttime):
     bataar "Well, you won't be here very long. You are to join some of your fellow inferiors on a ship"
     bataar "When you get where you get, do what you are told"
     "You and many others board a sad boat with many sad people and a few angry guards"
-
+    call s2(True) from _call_s2_5
     return
 label s1x4(firsttime):
     newsie "Hello, what would you like to hear about?"
@@ -701,16 +690,10 @@ label s2x2(firsttime, lasttime):
     scene blackbg
     if firsttime == True:
         trivier "Hello, welcome to Ferdinand's trivia game!"
-        trivier "You will have questions about the world in the 15th & 16th centuries."
+        trivier "You will have random questions about the world in the 15th & 16th centuries."
         trivier "Answer them, and you'll get a cash prize along with a free trip to meet our king-"
-        trivier "Charles, by the grace of God, Holy Roman Emperor, forever August, King of Germany, King of Italy, King of all Spains, of Castile, Aragon, León, Navarra,"
-        trivier "Grenada, Toledo, Valencia, Galicia, Majorca, Sevilla, Cordova, Murcia, Jaén, Algarves, Algeciras, Gibraltar, the Canary Islands,"
-        trivier "King of Two Sicilies, of Sardinia, Corsica, King of Jerusalem, King of the Western and Eastern Indies, Lord of the Islands and Main Ocean Sea, Archduke of Austria"
-        trivier "Duke of Burgundy, Brabant, Lorraine, Styria, Carinthia, Carniola, Limburg, Luxembourg, Gelderland, Neopatria, Württemberg," 
-        trivier "Landgrave of Alsace, Prince of Swabia, Asturia and Catalonia, Count of Flanders, Habsburg, Tyrol, Gorizia, Barcelona, Artois, Burgundy Palatine, Hainaut," 
-        trivier "Holland, Seeland, Ferrette, Kyburg, Namur, Roussillon, Cerdagne, Zutphen, Margrave of the Holy Roman Empire, Burgau, Oristano and Gociano, Lord of Frisia, the Wendish March, Pordenone, Biscay, Molin, Salins, Tripoli,"
         $ xp += 1
-        trivier "and Mechelen."
+        trivier "Charles, by the grace of God, Holy Roman Emperor, forever August, King of Germany, King of Italy, King of all Spains, of Castile, Aragon, León, Navarra, and much much more"
         trivier "Ready?"
         menu:
             "Yes!":
@@ -723,7 +706,7 @@ label s2x2(firsttime, lasttime):
                         "Deal with the merchant":
                             call s2x1(False, True) from _call_s2x1_2
                         "Take a trivia test to get an all-expense paid vacation":
-                            call s2x2(True) from _call_s2x2_2
+                            call s2x2(True, True) from _call_s2x2_2
                 elif lasttime == False:
                     call s2(False) from _call_s2_2
                 elif lasttime == 3:
@@ -855,13 +838,13 @@ label s2x2(firsttime, lasttime):
     
 
     if lasttime == 3:
-        call s2x4(False) from _call_s2x4_1
+        "Once you get to Guayaquil, Ferdinand leads you to a boat with the Spanish Flag and the royal colors of the Hapsburgs"
+    else:
         trivier "Oh look!"
         trivier "What a coincidence."
         trivier "The ship to take you to Seville has arrived!"
         "Behind you, gliding over the waves, is a magnificent ship flying the family colors of the Hapsburgs"
-    else:
-        call s3(True) from _call_s3_1
+    call s3(True) from _call_s3_1
 
     return
 label s2x3(firsttime):
@@ -975,10 +958,7 @@ label s2x3(firsttime):
         "Attempt a trivia test to get an all-expense paid vacation":
             call s2x2(True, True) from _call_s2x2_3
     return
-label s2x4(firsttime):
-    if firsttime == False:
-        "Once you get to Guayaquil, Ferdinand leads you to a boat with the Spanish Flag and the royal colors of the Hapsburgs"
-    
+label s2x4(firsttime):    
     sailwa "Good day to you!"
     tian "Hello!"
     menu:
