@@ -99,15 +99,25 @@ style frame:
 
 screen say(who, what):
     style_prefix "say"
-    
-    frame:
-        xpos 0 ypos 0
-        xminimum 1920
-        xmaximum 1920
-        yminimum 0
-        ymaximum 75
 
-        text "Experience Points: [xp]       Health: [hp]/10           Money: [sp] p        Year: [year]" xalign 0.5
+    fixed:
+        xpos 1700 ypos 110
+        xminimum 230
+        xmaximum 230
+        yminimum 0
+        ymaximum 1920
+
+        vbox:
+            text "{color=#ccff55}Experience Points: [xp]{/color}\n\n{color=#aaaaaa}Money: [sp] p{/color}\n\nYear: [year]\n\nHealth: " xalign 0.5
+            hbox:
+                if hp >= 0 and hp <=10:
+                    $ it = 0
+                    for it in range(hp):
+                        text "{color=#61ff12}|{/color}"
+                    for it in range(10-hp):
+                        text "{color=ff0000}|{/color}"
+                else:
+                    text "Error: Invalid Health Points"
 
     window:
         id "window"
@@ -129,8 +139,8 @@ screen say(who, what):
 ## Make the namebox available for styling through the Character object.
 init python:
     config.character_id_prefixes.append('namebox')
-    
-    
+
+
 
 style window is default
 style say_label is default
@@ -217,6 +227,25 @@ style input:
 
 screen choice(items):
     style_prefix "choice"
+
+    fixed:
+        xpos 1700 ypos 0
+        xminimum 230
+        xmaximum 230
+        yminimum 0
+        ymaximum 1920
+
+        vbox:
+            text "{color=#ccff55}Experience Points: [xp]{/color}\n\n{color=#aaaaaa}Money: [sp] p{/color}\n\nYear: [year]\n\nHealth: " xalign 0.5
+            hbox:
+                if hp >= 0 and hp <=10:
+                    $ it = 0
+                    for it in range(hp):
+                        text "{color=#61ff12}|{/color}"
+                    for it in range(10-hp):
+                        text "{color=ff0000}|{/color}"
+                else:
+                    text "Error: Invalid Health Points"
 
     vbox:
         for i in items:
